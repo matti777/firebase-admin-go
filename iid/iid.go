@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Package iid contains functions for deleting instance IDs from Firebase projects.
-package iid // import "firebase.google.com/go/iid"
+package iid // import "firebase-admin-go-fork/iid"
 
 import (
 	"errors"
@@ -24,7 +24,7 @@ import (
 
 	"google.golang.org/api/transport"
 
-	"firebase.google.com/go/internal"
+	"firebase-admin-go-fork/internal"
 )
 
 const iidEndpoint = "https://console.firebase.google.com/v1"

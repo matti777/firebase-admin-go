@@ -23,7 +23,7 @@ import (
 	"strings"
 	"time"
 
-	"firebase.google.com/go/internal"
+	"firebase-admin-go-fork/internal"
 	"golang.org/x/net/context"
 
 	"google.golang.org/api/googleapi"

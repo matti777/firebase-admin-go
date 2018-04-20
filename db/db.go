@@ -21,7 +21,7 @@ import (
 	"runtime"
 	"strings"
 
-	"firebase.google.com/go/internal"
+	"firebase-admin-go-fork/internal"
 
 	"net/url"
 

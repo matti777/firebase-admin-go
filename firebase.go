@@ -27,12 +27,12 @@ import (
 
 	"cloud.google.com/go/firestore"
 
-	"firebase.google.com/go/auth"
-	"firebase.google.com/go/db"
-	"firebase.google.com/go/iid"
-	"firebase.google.com/go/internal"
-	"firebase.google.com/go/messaging"
-	"firebase.google.com/go/storage"
+	"firebase-admin-go-fork/auth"
+	"firebase-admin-go-fork/db"
+	"firebase-admin-go-fork/iid"
+	"firebase-admin-go-fork/internal"
+	"firebase-admin-go-fork/messaging"
+	"firebase-admin-go-fork/storage"
 
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"

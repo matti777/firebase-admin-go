@@ -20,11 +20,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 
 	"golang.org/x/net/context"
 
-	"firebase.google.com/go/internal"
+	"firebase-admin-go-fork/internal"
 	"google.golang.org/api/identitytoolkit/v3"
 	"google.golang.org/api/transport"
 )
@@ -216,7 +217,7 @@ func (c *Client) RevokeRefreshTokens(ctx context.Context, uid string) error {
 // https://firebase.google.com/docs/auth/admin/verify-id-tokens#retrieve_id_tokens_on_clients for
 // more details on how to obtain an ID token in a client app.
 // This does not check whether or not the token has been revoked. See `VerifyIDTokenAndCheckRevoked` below.
-func (c *Client) VerifyIDToken(ctx context.Context, idToken string) (*Token, error) {
+func (c *Client) VerifyIDToken(ctx context.Context, idToken string, httpClient *http.Client) (*Token, error) {
 	if c.projectID == "" {
 		return nil, errors.New("project id not available")
 	}
@@ -226,7 +227,7 @@ func (c *Client) VerifyIDToken(ctx context.Context, idToken string) (*Token, err
 
 	h := &jwtHeader{}
 	p := &Token{}
-	if err := decodeToken(ctx, idToken, c.ks, h, p); err != nil {
+	if err := decodeToken(ctx, idToken, c.ks, h, p, httpClient); err != nil {
 		return nil, err
 	}
 
@@ -273,8 +274,8 @@ func (c *Client) VerifyIDToken(ctx context.Context, idToken string) (*Token, err
 //
 // VerifyIDTokenAndCheckRevoked verifies the signature and payload of the provided ID token and
 // checks that it wasn't revoked. Uses VerifyIDToken() internally to verify the ID token JWT.
-func (c *Client) VerifyIDTokenAndCheckRevoked(ctx context.Context, idToken string) (*Token, error) {
-	p, err := c.VerifyIDToken(ctx, idToken)
+func (c *Client) VerifyIDTokenAndCheckRevoked(ctx context.Context, idToken string, httpClient *http.Client) (*Token, error) {
+	p, err := c.VerifyIDToken(ctx, idToken, httpClient)
 	if err != nil {
 		return nil, err
 	}

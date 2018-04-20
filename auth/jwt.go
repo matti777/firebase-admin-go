@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 
 	"golang.org/x/net/context"
@@ -83,7 +84,7 @@ func encodeToken(ctx context.Context, s signer, h jwtHeader, p jwtPayload) (stri
 	return fmt.Sprintf("%s.%s", ss, base64.RawURLEncoding.EncodeToString(sig)), nil
 }
 
-func decodeToken(ctx context.Context, token string, ks keySource, h *jwtHeader, p jwtPayload) error {
+func decodeToken(ctx context.Context, token string, ks keySource, h *jwtHeader, p jwtPayload, httpClient *http.Client) error {
 	s := strings.Split(token, ".")
 	if len(s) != 3 {
 		return errors.New("incorrect number of segments")
@@ -96,7 +97,7 @@ func decodeToken(ctx context.Context, token string, ks keySource, h *jwtHeader, 
 		return err
 	}
 
-	keys, err := ks.Keys(ctx)
+	keys, err := ks.Keys(ctx, httpClient)
 	if err != nil {
 		return err
 	}

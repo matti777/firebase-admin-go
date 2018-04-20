@@ -20,7 +20,7 @@ import (
 	"net/http"
 	"strings"
 
-	"firebase.google.com/go/internal"
+	"firebase-admin-go-fork/internal"
 
 	"golang.org/x/net/context"
 )
